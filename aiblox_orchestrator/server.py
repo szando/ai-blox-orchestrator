@@ -7,6 +7,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 
+from aiblox_kb import ChunkCacheRepo, ItemRepo, make_engine, make_session_factory, make_sessionmaker
 from aiblox_orchestrator.chunker.registry import InMemoryChunkerRegistry
 from aiblox_orchestrator.config.settings import load_settings
 from aiblox_orchestrator.orchestrator import Orchestrator, StepRunner
@@ -17,9 +18,6 @@ from aiblox_orchestrator.protocol.events import EventEnvelope
 from aiblox_orchestrator.retriever.embedder import DeterministicEmbedder
 from aiblox_orchestrator.retriever.retriever import HybridRetriever
 from aiblox_orchestrator.router.decision_router import DecisionRouter
-from aiblox_orchestrator.storage.db import make_engine, make_session_factory, make_sessionmaker
-from aiblox_orchestrator.storage.chunk_cache_repo import ChunkCacheRepo
-from aiblox_orchestrator.storage.item_repo import ItemRepo
 
 app = FastAPI(title="AI Blox Orchestrator")
 
@@ -38,7 +36,7 @@ class WebSocketEventSink(EventSink):
 
 
 settings = load_settings()
-engine = make_engine(settings)
+engine = make_engine(settings.db_dsn)
 sessionmaker = make_sessionmaker(engine)
 session_factory = make_session_factory(sessionmaker)
 

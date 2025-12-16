@@ -9,11 +9,9 @@ from aiblox_orchestrator.chunker.protocols import ChunkerRegistry
 from aiblox_orchestrator.protocol.context import RequestContext
 from aiblox_orchestrator.retriever.embedder import DeterministicEmbedder
 from aiblox_orchestrator.retriever.hybrid_scorer import HybridScorer
+from aiblox_kb import KbItem, ChunkCacheRepo, ItemRepo
 from aiblox_orchestrator.retriever.models import CandidateItem, EvidenceChunk, RetrievalBundle, RetrievalPrefs, RetrievalStats
 from aiblox_orchestrator.retriever.protocols import Embedder, Retriever
-from aiblox_orchestrator.storage.models import KbItem
-from aiblox_orchestrator.storage.chunk_cache_repo import ChunkCacheRepo
-from aiblox_orchestrator.storage.item_repo import ItemRepo
 
 
 def _cosine_similarity(a: Sequence[float], b: Sequence[float]) -> float:

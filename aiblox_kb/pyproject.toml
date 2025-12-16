@@ -1,0 +1,15 @@
+[project]
+name = "aiblox-kb"
+version = "0.1.0"
+description = "AI Blox KB contract package (schema/models/repos/migrations)"
+requires-python = ">=3.12"
+dependencies = [
+    "sqlalchemy>=2.0.45",
+    "asyncpg>=0.30.0",
+    "alembic>=1.13.3",
+    "python-dotenv>=1.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

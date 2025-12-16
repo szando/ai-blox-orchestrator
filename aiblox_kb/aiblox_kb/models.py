@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from datetime import datetime
 from typing import Any
 from uuid import UUID
@@ -8,10 +9,7 @@ from sqlalchemy import JSON, DateTime, ForeignKey, Index, Text, func
 from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR, UUID as PGUUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from aiblox_orchestrator.config.settings import load_settings
-
-
-SCHEMA_DEFAULT = load_settings().db_schema
+SCHEMA = os.getenv("AIBLOX_DB_SCHEMA", "kb")
 
 
 class Base(DeclarativeBase):
@@ -23,7 +21,7 @@ class KbItem(Base):
     __table_args__ = (
         Index("ix_kb_items_tsv", "tsv", postgresql_using="gin"),
         Index("ix_kb_items_owner_user_id", "owner_user_id"),
-        {"schema": SCHEMA_DEFAULT},
+        {"schema": SCHEMA},
     )
 
     id: Mapped[UUID] = mapped_column(PGUUID(as_uuid=True), primary_key=True)
@@ -63,13 +61,13 @@ class KbChunkCache(Base):
             "chunk_index",
             unique=True,
         ),
-        {"schema": SCHEMA_DEFAULT},
+        {"schema": SCHEMA},
     )
 
     id: Mapped[UUID] = mapped_column(PGUUID(as_uuid=True), primary_key=True)
     item_id: Mapped[UUID] = mapped_column(
         PGUUID(as_uuid=True),
-        ForeignKey(f"{SCHEMA_DEFAULT}.kb_items.id", ondelete="CASCADE"),
+        ForeignKey(f"{SCHEMA}.kb_items.id", ondelete="CASCADE"),
         nullable=False,
     )
     owner_user_id: Mapped[UUID] = mapped_column(PGUUID(as_uuid=True), nullable=False)

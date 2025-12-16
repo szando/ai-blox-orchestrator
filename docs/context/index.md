@@ -50,6 +50,11 @@ Implementers should read these files in order:
    root-is-runtime uv workspace, KB contract extraction into `aiblox_kb`,
    dependency rules, migration ownership, and versioning boundaries.
 
+8. **07-item-repo.md**
+   Minimal KB write/read contract:
+   ownership rules, idempotent ingestion semantics,
+   and full-text search guarantees.
+
 
 ---
 

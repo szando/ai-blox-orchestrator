@@ -7,10 +7,10 @@ export AIBLOX_DB_DSN="postgresql+asyncpg://postgres:postgres@localhost:5432/post
 export AIBLOX_DB_SCHEMA="kb"
 ```
 
-2) Run migrations:
+2) Run migrations (from repo root):
 
 ```bash
-uv run alembic upgrade head
+uv run --project aiblox_kb alembic upgrade head
 ```
 
 3) Start the dev server:

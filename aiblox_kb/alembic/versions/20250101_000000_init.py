@@ -1,6 +1,4 @@
-"""Initial schema for kb items and chunk cache.
-
-"""
+"""Initial schema for kb items and chunk cache."""
 
 from __future__ import annotations
 
@@ -18,7 +16,7 @@ depends_on = None
 def upgrade() -> None:
     schema = op.get_context().config.attributes.get("schema", None) or "kb"
 
-    op.execute(sa.text(f"CREATE SCHEMA IF NOT EXISTS {schema}"))
+    op.execute(sa.text(f'CREATE SCHEMA IF NOT EXISTS "{schema}"'))
 
     op.create_table(
         "kb_items",
@@ -32,7 +30,12 @@ def upgrade() -> None:
         sa.Column("content_text", sa.Text(), nullable=False),
         sa.Column("content_hash", sa.Text(), nullable=True),
         sa.Column("tsv", postgresql.TSVECTOR(), nullable=True),
-        sa.Column("metadata", postgresql.JSONB(astext_type=sa.Text()), nullable=False, server_default=sa.text("'{}'::jsonb")),
+        sa.Column(
+            "metadata",
+            postgresql.JSONB(astext_type=sa.Text()),
+            nullable=False,
+            server_default=sa.text("'{}'::jsonb"),
+        ),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
         sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
         schema=schema,

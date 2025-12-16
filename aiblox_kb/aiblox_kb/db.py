@@ -4,11 +4,9 @@ from typing import Callable
 
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 
-from aiblox_orchestrator.config.settings import Settings
 
-
-def make_engine(settings: Settings) -> AsyncEngine:
-    return create_async_engine(settings.db_dsn, future=True)
+def make_engine(db_dsn: str, echo: bool = False) -> AsyncEngine:
+    return create_async_engine(db_dsn, future=True, echo=echo)
 
 
 def make_sessionmaker(engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:

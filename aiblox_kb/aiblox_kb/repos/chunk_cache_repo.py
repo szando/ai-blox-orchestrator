@@ -7,7 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from aiblox_orchestrator.storage.models import KbChunkCache
+from aiblox_kb.models import KbChunkCache
 
 
 class ChunkCacheRepo:

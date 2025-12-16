@@ -12,12 +12,12 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 # Ensure project root on sys.path for imports
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from aiblox_orchestrator.config.settings import load_settings
-from aiblox_orchestrator.storage.models import Base
+from aiblox_kb.settings import load_settings
+from aiblox_kb.models import Base
 
 # Alembic Config
 config = context.config
@@ -47,7 +47,6 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
-    # Ensure target schema exists before version table creation
     connection.execute(sa.text(f'CREATE SCHEMA IF NOT EXISTS "{settings.db_schema}"'))
     context.configure(
         connection=connection,

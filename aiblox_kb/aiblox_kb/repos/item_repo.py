@@ -6,8 +6,8 @@ from uuid import UUID
 from sqlalchemy import Select, desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from aiblox_orchestrator.retriever.tsquery import build_tsquery
-from aiblox_orchestrator.storage.models import KbItem
+from aiblox_kb.models import KbItem
+from aiblox_kb.tsquery import build_tsquery
 
 
 class ItemRepo:
@@ -45,11 +45,7 @@ class ItemRepo:
             rows = result.all()
             return [(row.id, float(row.rank_text)) for row in rows]
 
-    async def search_vec(
-        self,
-        query_vector,
-        prefs,
-    ) -> list[tuple[str, float]]:
+    async def search_vec(self, query_vector, prefs) -> list[tuple[str, float]]:
         # v0.1: embeddings/pgvector not yet included (Option B)
         return []
 
